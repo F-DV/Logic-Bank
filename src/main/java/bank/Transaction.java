@@ -2,7 +2,8 @@ package bank;
 
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Transaction {
@@ -10,19 +11,19 @@ public class Transaction {
     private static final String DATE_FORMAT = "dd-MM-yyyy";
     private static final String EMPTY_VALUE = "          ";
 
-    private SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+    private DateTimeFormatter sdf = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
     private Amount amount;
-    private Date date;
+    private LocalDate date;
     private TypeTransaction typeTransaction;
 
 
-    public Transaction(Amount value,Date date) {
+    public Transaction(Amount value,LocalDate date) {
         this.amount = value;
         this.date = date;
     }
 
-    public Transaction(Amount amount, Date date, TypeTransaction typeTransaction) {
+    public Transaction(Amount amount, LocalDate date, TypeTransaction typeTransaction) {
         this.amount = amount;
         this.date = date;
         this.typeTransaction = typeTransaction;
@@ -48,7 +49,6 @@ public class Transaction {
         addTypeOfTransaction(builder,typeTransaction); //Agrega el tipo de transacción
 
         printer.println(builder);
-
 
 
     }

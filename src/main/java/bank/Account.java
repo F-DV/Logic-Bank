@@ -1,13 +1,10 @@
 package bank;
 
 import java.io.PrintStream;
-import java.util.Date;
-
+import java.time.LocalDate;
 
 public class Account {
 
-    private String number;
-    private String userName;
     private Amount balance =Amount.amountOf(0);
 
     private Statement statement;
@@ -18,20 +15,20 @@ public class Account {
     }
 
     //Deposito
-    public void deposit(Amount value, Date date){
+    public void deposit(Amount value, LocalDate date){
 
         recordTransaction(value,date,TypeTransaction.DEPOSIT);
     }
 
     //Retiro
-    public void withdrawal(Amount value,Date date){
+    public void withdrawal(Amount value,LocalDate date){
 
         recordTransaction(value, date,TypeTransaction.WITHDRAWAL);
 
     }
 
     //Transferencia
-    public void transfer(Amount money,Date date, Account anotherAccount){
+    public void transfer(Amount money, LocalDate date, Account anotherAccount){
         anotherAccount.deposit(money,date);
         recordTransaction(money,date,TypeTransaction.TRANSFER);
 
@@ -43,7 +40,7 @@ public class Account {
     }
 
     //Guarda la transacción
-    private void recordTransaction(Amount value, Date date, TypeTransaction typeTransaction){
+    private void recordTransaction(Amount value, LocalDate date, TypeTransaction typeTransaction){
         Transaction transaction = new Transaction(value,date,typeTransaction);
 
         Amount balanceAfterTransaction = transaction.balanceAfterTransaction(balance,typeTransaction);
