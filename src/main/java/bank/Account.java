@@ -1,76 +1,57 @@
 package bank;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.PrintStream;
+import java.util.Date;
+
 
 public class Account {
 
     private String number;
     private String userName;
-    private Double Amount;
-    private LinkedList<Transaction> transactions = new LinkedList<>();
+    private Amount balance =Amount.amountOf(0);
 
-    public Account(String number, String userName, Double amount) {
-        this.number = number;
-        this.userName = userName;
-        Amount = amount;
+    private Statement statement;
+
+
+    public Account(Statement statement) {
+        this.statement = statement;
     }
 
     //Deposito
-    public Double deposit(double amount){
-        this.Amount = this.Amount + amount;
+    public void deposit(Amount value, Date date){
 
-        return this.Amount;
+        recordTransaction(value,date,TypeTransaction.DEPOSIT);
     }
+
     //Retiro
-    public Double withdrawal(double amount){
-        if (amount > this.Amount){
-            return null;
-        }
-        return this.Amount = this.Amount - amount;
+    public void withdrawal(Amount value,Date date){
+
+        recordTransaction(value, date,TypeTransaction.WITHDRAWAL);
+
     }
+
     //Transferencia
-    public Boolean transfer(double money, Account account){
-        if(money > this.Amount){
-            return false;
-        }
-        this.Amount = this.Amount - money;
-        account.deposit(money);
-        return true;
+    public void transfer(Amount money,Date date, Account anotherAccount){
+        anotherAccount.deposit(money,date);
+        recordTransaction(money,date,TypeTransaction.TRANSFER);
+
+    }
+
+    //Imprime el estado de la cuenta
+    public void printStatement(PrintStream printer){
+        statement.printTo(printer);
+    }
+
+    //Guarda la transacción
+    private void recordTransaction(Amount value, Date date, TypeTransaction typeTransaction){
+        Transaction transaction = new Transaction(value,date,typeTransaction);
+
+        Amount balanceAfterTransaction = transaction.balanceAfterTransaction(balance,typeTransaction);
+
+        balance = balanceAfterTransaction;
+
+        statement.addLineContaining(transaction, balanceAfterTransaction);
     }
 
 
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public Double getAmount() {
-        return Amount;
-    }
-
-    public void setAmount(Double amount) {
-        Amount = amount;
-    }
-
-    @Override
-    public String toString() {
-        return "Account{" +
-                "number='" + number + '\'' +
-                ", userName='" + userName + '\'' +
-                ", Amount=" + Amount +
-                '}';
-    }
 }

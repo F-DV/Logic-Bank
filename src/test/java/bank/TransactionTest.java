@@ -5,10 +5,10 @@ import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserTest {
+class TransactionTest {
 
     @Test
-    public void createdUser(){
+    public void mightGetDate(){
 
     }
 

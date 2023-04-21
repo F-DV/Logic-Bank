@@ -1,24 +1,49 @@
 package bank;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
 
-        User felipe = new User("10366598452","Felipe");
-        felipe.getAccount().deposit(1000);
 
-        User andres = new User("1036650214","Andres");
-        andres.getAccount().deposit(2000);
+         Statement statement1 = new Statement();
+         Account account1 = new Account(statement1);
+
+         Amount cantidadADepositar = Amount.amountOf(1000);
+         Amount cantidadARetirar = Amount.amountOf(500);
+         Amount cantidadADepositar1 = Amount.amountOf(1000);
+         Amount cantidadATransferir = Amount.amountOf(200);
+
+         Date fechaDeAhora = new Date(123,3,10);
+         Date fechaDeAhora2 = new Date(123,3,11);
+         Date fechaDeAhora3 = new Date(123,3,12);
+
+         account1.deposit(cantidadADepositar,fechaDeAhora);
+         account1.withdrawal(cantidadARetirar,fechaDeAhora2);
+         account1.deposit(cantidadADepositar1,fechaDeAhora3);
+
+         Statement statement2 = new Statement();
+         Account account2 = new Account(statement2);
+
+         account1.transfer(cantidadATransferir,fechaDeAhora2,account2);
+
+         System.out.println("Estado de cuenta 1");
+         account1.printStatement(System.out);
+
+         System.out.println("");
+         System.out.println("Estado de cuenta 2");
+         account2.printStatement(System.out);
 
 
-        System.out.println("Amount Felipe: " + felipe.getAccount().getAmount());
-        System.out.println("Amount Andres: " + andres.getAccount().getAmount());
 
-        System.out.println("Andres le hace una transferencia a felipe de 500");
-        System.out.println(andres.getAccount().transfer(2500,felipe.getAccount()));
 
-        System.out.println("Amount Felipe: " + felipe.getAccount().getAmount());
-        System.out.println("Amount Andres: " + andres.getAccount().getAmount());
+
+
+
 
     }
 }

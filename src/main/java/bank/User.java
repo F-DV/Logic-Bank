@@ -9,7 +9,7 @@ public class User {
     public User(String id, String name) {
         this.id = id;
         this.name = name;
-        this.account = new Account(createNumberAccount(),name,0.0);
+        //this.account = new Account(createNumberAccount(),name);
 
     }
 
